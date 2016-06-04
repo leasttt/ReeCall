@@ -1,0 +1,4 @@
+{
+    // 启用后，将在保存文件时剪裁尾随空格。
+    "files.trimTrailingWhitespace": true
+}
