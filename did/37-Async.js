@@ -195,10 +195,19 @@ class List extends Component {
         //为什么这里可以取得 props.navigator?请看上文:
         //<Component {...route.params} navigator={navigator} />
         //这里传递了navigator作为props
+        let _that = this;
         if (navigator) {
             navigator.push({
                 name: 'GouWu',
                 component: GouWu,
+                params: {
+                    fetchData: function () {
+                        console.log('启动fetchData里的方法了');
+                        _that.setState({
+                            count: 0,
+                        });
+                    }
+                }
             })
         }
     }
@@ -314,6 +323,7 @@ class GouWu extends Component {
 
                 <Text style={styles.btn}>{this.state.sd}支付{str}</Text>
                 <Text style={styles.clear} onPress={this.clearStorage.bind(this) }>清空购物车</Text>
+                <Text style={styles.clear} onPress={this.backTo.bind(this) }>返回上一页</Text>
 
             </ScrollView>
         );
@@ -365,12 +375,25 @@ class GouWu extends Component {
                     data: [],
                     price: 0,
                 });
-
                 alert('购物车已经清空');
             }
         });
+
+        //触发一下回调 让数据同步
+        console.log('点击了清空购物车');
+        if (this.props.fetchData) {
+            console.log('点击了清空购物车----回调去影响List页面');
+            this.props.fetchData();
+        }
     }
 
+    backTo() {
+        const { navigator } = this.props;
+        if (navigator) {
+
+            navigator.pop();
+        }
+    }
 
 }
 
