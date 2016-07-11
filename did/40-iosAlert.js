@@ -15,7 +15,7 @@ import {
     AsyncStorage,
     TouchableOpacity,
     View,
-    ActionSheetIOS,
+    AlertIOS,
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
@@ -61,41 +61,50 @@ class HomeUI extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.item} onPress={this.tip} >showActionSheetWithOptions</Text>
-                <Text style={styles.item} onPress={this.share} >showShareActionSheetWithOptions</Text>
+                <Text style={styles.item} onPress={this.tip}>提示对话框</Text>
+                <Text style={styles.item} onPress={this.input}>输入对话框</Text>
             </View>
         );
     }
 
     tip(){
-        ActionSheetIOS.showActionSheetWithOptions(
+        AlertIOS.alert('按钮', '嗒嗒嗒嗒', [
             {
-                options:['拨打电话','发送邮件','发送短信','取消'],
-                cancelButtonIndex:3,
-                destructiveButtonIndex:0,
-                title:'做何操作?',
-                message:'要想清楚',
+                text:'cancle',
+                onPress:()=>{
+                    alert('cancle');
+                }
             },
-            function(index){
-                alert(index);
-            }
-        );
+            {
+                text:'wait',
+                onPress:()=>{
+                    alert('wait');
+                }
+            },
+            {
+                text:'submit',
+                onPress:()=>{
+                    alert('submit');
+                }
+            },
+        ]);
     }
 
-    share(){
-        ActionSheetIOS.showShareActionSheetWithOptions(
+    input(){
+        AlertIOS.prompt('输入', '输入姓名', [
             {
-                message:'东方耀论坛',
-                url:'http://www.reactnative.vip/'
-
+                text:'cancle',
+                onPress:()=>{
+                    alert('cancle');
+                }
             },
-            function(err){
-                alert(err);
+            {
+                text:'submit',
+                onPress:(name)=>{
+                    alert(name);
+                }
             },
-            function(suc){
-                alert(suc);
-            }
-        );
+        ]);
     }
 }
 
@@ -175,16 +184,16 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        marginTop: 25,
+        marginTop:25,
     },
-    item: {
-        marginTop: 10,
-        marginLeft: 5,
-        marginRight: 5,
-        height: 30,
-        borderWidth: 1,
-        padding: 6,
-        borderColor: '#ddd',
+    item:{
+        marginTop:10,
+        marginLeft:5,
+        marginRight:5,
+        height:30,
+        borderWidth:1,
+        padding:6,
+        borderColor:'#ddd',
 
     },
     listView: {
